@@ -81,7 +81,8 @@ var Ptn = function () {
       if (this.isPlacement()) return [{
         action: reverse ? 'pop' : 'push',
         x: this.x,
-        y: this.y
+        y: this.y,
+        type: this.specialPiece || 'flat'
       }];
 
       var firstMove = {
@@ -284,7 +285,45 @@ var Ptn = function () {
   }], [{
     key: 'fromMoveset',
     value: function fromMoveset(moveSet) {
-      // TODO
+      var typeLetter = function typeLetter(type) {
+        switch (type) {
+          case 'capstone':
+            return 'C';
+          case 'wall':
+            return 'S';
+          case 'flatstone':
+            return '';
+          default:
+            return '';
+        }
+      };
+
+      var _moveSet$ = moveSet[0],
+          x = _moveSet$.x,
+          y = _moveSet$.y,
+          count = _moveSet$.count,
+          type = _moveSet$.type;
+
+
+      var square = '' + (count || '') + typeLetter(type) + 'abcdefgh'[y] + (x + 1);
+
+      if (moveSet.length === 1) return square;
+
+      var _moveSet$2 = moveSet[1],
+          x2 = _moveSet$2.x,
+          y2 = _moveSet$2.y;
+
+
+      var direction = this.getDirection([x2 - x, y2 - y]);
+
+      var distribution = moveSet.slice(1).reduce(function (s, _ref) {
+        var count = _ref.count,
+            flatten = _ref.flatten;
+
+        return s + count + (flatten ? '*' : '');
+      }, '');
+
+      return '' + square + direction + distribution;
     }
   }, {
     key: 'fromUndoMoveset',
@@ -304,6 +343,20 @@ var Ptn = function () {
     key: 'parse',
     value: function parse(notation) {
       return new Ptn(notation);
+    }
+  }, {
+    key: 'getDirection',
+    value: function getDirection(_ref2) {
+      var _ref3 = _slicedToArray(_ref2, 2),
+          x = _ref3[0],
+          y = _ref3[1];
+
+      if (x === 0 && y === 1) return '+';
+      if (x === 0 && y === -1) return '-';
+      if (x === 1 && y === 0) return '>';
+      if (x === -1 && y === 0) return '<';
+
+      return '';
     }
   }]);
 

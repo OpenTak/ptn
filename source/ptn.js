@@ -56,7 +56,8 @@ export default class Ptn {
     if (this.isPlacement()) return [{
       action: reverse ? 'pop' : 'push',
       x:      this.x,
-      y:      this.y
+      y:      this.y,
+      type:   this.specialPiece || 'flat'
     }];
 
     const firstMove = {
@@ -94,7 +95,30 @@ export default class Ptn {
   }
 
   static fromMoveset (moveSet) {
-    // TODO
+    const typeLetter = type => {
+      switch (type) {
+        case 'capstone':  return 'C';
+        case 'wall':      return 'S';
+        case 'flatstone': return '';
+        default:          return '';
+      }
+    }
+
+    const { x, y, count, type } = moveSet[0];
+
+    const square = `${count || ''}${typeLetter(type)}${'abcdefgh'[y]}${x + 1}`;
+
+    if (moveSet.length === 1) return square;
+
+    const { x: x2, y: y2 } = moveSet[1];
+
+    const direction = this.getDirection([x2 - x, y2 - y]);
+
+    const distribution = moveSet.slice(1).reduce((s, { count, flatten }) => {
+      return s + count + (flatten ? '*' : '');
+    }, '');
+
+    return `${square}${direction}${distribution}`;
   }
 
   static fromUndoMoveset (moveSet) {
@@ -234,5 +258,14 @@ export default class Ptn {
       case '<': return [-1, 0];
       default:  return [0, 0];
     }
+  }
+
+  static getDirection ([x, y]) {
+    if (x === 0  && y === 1)  return '+';
+    if (x === 0  && y === -1) return '-';
+    if (x === 1  && y === 0)  return '>';
+    if (x === -1 && y === 0)  return '<';
+
+    return '';
   }
 }

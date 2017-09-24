@@ -62,12 +62,50 @@ describe('Ptn', () => {
     });
   });
 
+  describe('#fromMoveset', () => {
+    it('converts from a moveset to ptn', () => {
+      expect(Ptn.fromMoveset([
+        { action: 'push', x: 2, y: 2 }
+      ])).to.equal('c3');
+    });
+
+    it('converts from a special placement to ptn', () => {
+      expect(Ptn.fromMoveset([
+        { action: 'push', x: 2, y: 2, type: 'capstone' }
+      ])).to.equal('Cc3');
+
+      expect(Ptn.fromMoveset([
+        { action: 'push', x: 2, y: 2, type: 'wall' }
+      ])).to.equal('Sc3');
+    });
+
+    it('converts a movement PTN', () => {
+      expect(Ptn.fromMoveset([{
+        action: 'pop', count: 3, x: 2, y: 2
+      }, {
+        action: 'push', count: 1, x: 3, y: 2
+      }, {
+        action: 'push', count: 1, x: 4, y: 2
+      }, {
+        action: 'push', count: 1, x: 5, y: 2
+      }])).to.equal('3c3>111');
+    });
+
+    it('converts a movement with a wall smash', () => {
+      expect(Ptn.fromMoveset([{
+        action: 'pop', count: 1, x: 2, y: 2
+      }, {
+        action: 'push', count: 1, flatten: true, x: 3, y: 2
+      }])).to.equal('1c3>1*');
+    });
+  });
+
   describe('#toMoveset', () => {
     it('converts PTN to a moveset', () => {
       expect(
         Ptn.parse('c3').toMoveset()
       ).to.deep.equal([
-        { action: 'push', x: 2, y: 2 }
+        { action: 'push', x: 2, y: 2, type: 'flat' }
       ]);
     });
 
@@ -101,7 +139,7 @@ describe('Ptn', () => {
       expect(
         Ptn.parse('c3').toUndoMoveset()
       ).to.deep.equal([
-        { action: 'pop', x: 2, y: 2 }
+        { action: 'pop', x: 2, y: 2, type: 'flat' }
       ]);
     });
 
