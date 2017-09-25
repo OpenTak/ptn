@@ -1,13 +1,13 @@
 {
   "name": "ptn",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Playtak Notation Utility",
   "author": "baweaver <brandon_weaver@baweaver.com>",
   "license": "MIT",
   "main": "./distribution/ptn.js",
-  "repository" : {
+  "repository": {
     "type": "git",
-    "url" : "https://github.com/OpenTak/ptn.git"
+    "url": "https://github.com/OpenTak/ptn.git"
   },
   "files": [
     "source",
