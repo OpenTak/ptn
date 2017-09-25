@@ -122,7 +122,7 @@ export default class Ptn {
   }
 
   static fromUndoMoveset (moveSet) {
-    // TODO
+    return this.fromMoveset([...moveSet].reverse());
   }
 
   /**

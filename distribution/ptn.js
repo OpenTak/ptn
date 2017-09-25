@@ -327,9 +327,9 @@ var Ptn = function () {
     }
   }, {
     key: 'fromUndoMoveset',
-    value: function fromUndoMoveset(moveSet) {}
-    // TODO
-
+    value: function fromUndoMoveset(moveSet) {
+      return this.fromMoveset([].concat(_toConsumableArray(moveSet)).reverse());
+    }
 
     /**
      * Static constructor
