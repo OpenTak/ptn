@@ -1,4 +1,4 @@
-module.exports = class Ptn {
+export default class Ptn {
   constructor (notation) {
     const matchData = notation.match(/(\d)?([CS])?([a-h])([1-8])(([<>+-])([1-8]+)?(\*)?)?/i);
 
