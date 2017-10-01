@@ -7,5 +7,23 @@
   "plugins": [
     "external-helpers",
     "transform-object-rest-spread"
-  ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        "env"
+      ],
+      "plugins": [
+        "transform-runtime"
+      ]
+    },
+    "development": {
+      "presets": [
+        ["env", { "modules": false }]
+      ],
+      "plugins": [
+        "transform-runtime"
+      ]
+    }
+  }
 }
