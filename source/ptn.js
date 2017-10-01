@@ -20,8 +20,8 @@ export default class Ptn {
 
     this.pieceType = this.specialPiece === 'C' ? 'capstone' : 'piece'
 
-    this.x = parseInt(this.row, 10) - 1;
-    this.y = 'abcdefgh'.indexOf(this.column);
+    this.y = parseInt(this.row, 10) - 1;
+    this.x = 'abcdefgh'.indexOf(this.column);
 
     if (this.movement && !this.pieceCount) {
       this.pieceCount = '' + (this.distribution || 1);
@@ -227,9 +227,9 @@ export default class Ptn {
    * @return {Integer}
    */
   columnTrajectory () {
-    const offset = this.directionModifier()[1] * this.stackTotal();
+    const offset = this.directionModifier()[0] * this.stackTotal();
 
-    return this.y + offset;
+    return this.x + offset;
   }
 
   /**
@@ -239,14 +239,17 @@ export default class Ptn {
    * @return {Integer}
    */
   rowTrajectory () {
-    const offset = this.directionModifier()[0] * this.stackTotal();
+    const offset = this.directionModifier()[1] * this.stackTotal();
 
-    return this.x + offset;
+    return this.y + offset;
   }
 
   /**
    * Offset modifiers used to calculate x and y coordinates over
    * distributions of pieces
+   *
+   * [0] - X or Column offset
+   * [1] - Y or Row offset
    *
    * @return {Array} x and y offsets per direction
    */

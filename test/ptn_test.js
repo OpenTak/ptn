@@ -16,8 +16,8 @@ describe('Ptn', () => {
         movement:     '+111',
         direction:    '+',
         distribution: '111',
-        x:            2,
-        y:            3
+        x:            3,
+        y:            2
       });
     });
 
@@ -29,8 +29,8 @@ describe('Ptn', () => {
         specialPiece: 'C',
         column:       'd',
         row:          '3',
-        x:            2,
-        y:            3
+        x:            3,
+        y:            2
       });
     });
 
@@ -42,8 +42,8 @@ describe('Ptn', () => {
         specialPiece: 'S',
         column:       'd',
         row:          '3',
-        x:            2,
-        y:            3
+        x:            3,
+        y:            2
       });
     });
 
@@ -260,19 +260,19 @@ describe('Ptn', () => {
 
     it('will ignore a column movement', () => {
       expect(
-        Ptn.parse('3d3+111').rowTrajectory()
+        Ptn.parse('3d3>111').rowTrajectory()
       ).to.equal(2);
     });
 
-    it('will return the trajectory row of a movement right', () => {
+    it('will return the trajectory row of a movement up', () => {
       expect(
-        Ptn.parse('3d3>111').rowTrajectory()
+        Ptn.parse('3d3+111').rowTrajectory()
       ).to.equal(5);
     });
 
-    it('will return the trajectory row of a movement left', () => {
+    it('will return the trajectory row of a movement down', () => {
       expect(
-        Ptn.parse('2d3<11').rowTrajectory()
+        Ptn.parse('2d3-11').rowTrajectory()
       ).to.equal(0);
     });
   });
@@ -286,19 +286,19 @@ describe('Ptn', () => {
 
     it('will ignore a row movement', () => {
       expect(
-        Ptn.parse('3d3>111').columnTrajectory()
+        Ptn.parse('3d3+111').columnTrajectory()
       ).to.equal(3);
     });
 
-    it('will return the trajectory column of a movement down', () => {
+    it('will return the trajectory column of a movement left', () => {
       expect(
-        Ptn.parse('3d3-111').columnTrajectory()
+        Ptn.parse('3d3<111').columnTrajectory()
       ).to.equal(0);
     });
 
-    it('will return the trajectory column of a movement up', () => {
+    it('will return the trajectory column of a movement right', () => {
       expect(
-        Ptn.parse('2d3+11').columnTrajectory()
+        Ptn.parse('2d3>11').columnTrajectory()
       ).to.equal(5);
     });
   });
