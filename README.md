@@ -20,7 +20,7 @@ const ptn = Ptn.parse('3c3>111');
 //   direction: '>',
 //   distribution: '111',
 //   wallSmash: undefined,
-//   pieceType: 'piece',
+//   pieceType: 'flat',
 //   x: 2,
 //   y: 2
 // }
