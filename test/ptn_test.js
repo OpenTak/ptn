@@ -71,7 +71,7 @@ describe('Ptn', () => {
 
     it('converts from a special placement to ptn', () => {
       expect(Ptn.fromMoveset([
-        { action: 'push', x: 2, y: 2, type: 'capstone' }
+        { action: 'push', x: 2, y: 2, type: 'cap' }
       ])).to.equal('Cc3');
 
       expect(Ptn.fromMoveset([

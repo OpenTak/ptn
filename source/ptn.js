@@ -18,7 +18,7 @@ export default class Ptn {
       this.wallSmash
     ] = matchData;
 
-    this.pieceType = this.specialPiece === 'C' ? 'capstone' : 'piece'
+    this.pieceType = this.specialPiece === 'C' ? 'cap' : 'flat';
 
     this.y = parseInt(this.row, 10) - 1;
     this.x = 'abcdefgh'.indexOf(this.column);
@@ -51,13 +51,15 @@ export default class Ptn {
    * @return {Array}   Set of moves that can be applied
    */
   toMoveset (reverse = false) {
+    const types = { C: 'cap', S: 'wall', F: 'flat' };
+
     if (!this.isValid()) return [{ errors: this.errors }];
 
     if (this.isPlacement()) return [{
       action: reverse ? 'pop' : 'push',
       x:      this.x,
       y:      this.y,
-      type:   this.specialPiece || 'flat'
+      type:   types[this.specialPiece] || 'flat'
     }];
 
     const firstMove = {
@@ -95,18 +97,11 @@ export default class Ptn {
   }
 
   static fromMoveset (moveSet) {
-    const typeLetter = type => {
-      switch (type) {
-        case 'capstone':  return 'C';
-        case 'wall':      return 'S';
-        case 'flatstone': return '';
-        default:          return '';
-      }
-    }
+    const types = { cap: 'C', wall: 'S', flat: '' };
 
     const { x, y, count, type } = moveSet[0];
 
-    const square = `${count || ''}${typeLetter(type)}${'abcdefgh'[y]}${x + 1}`;
+    const square = `${count || ''}${types[type] || ''}${'abcdefgh'[x]}${y + 1}`;
 
     if (moveSet.length === 1) return square;
 
